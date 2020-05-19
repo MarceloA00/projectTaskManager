@@ -19,7 +19,7 @@ if ($accion === 'crear') {
         if ($stmt->affected_rows > 0) {
             $respuesta = array(
                 'respuesta' => 'correcto',
-                'id:insertado' => $stmt->insert_id,
+                'id_insertado' => $stmt->insert_id,
                 'tipo' => $accion
             );
         } else {
@@ -31,7 +31,7 @@ if ($accion === 'crear') {
         $conn->close();
     } catch (Exception $e) {
         $respuesta = array(
-            'pass' => $e->getMessage()
+            'error' => $e->getMessage()
         );
     }
 
@@ -48,6 +48,10 @@ if ($accion === 'login') {
         $stmt->fetch();
         if($nombre_usuario) {
             if(password_verify($password, $pass_usuario)) {
+                session_start();
+                $_SESSION['nombre'] = $usuario;
+                $_SESSION['id'] = $id_usuario;
+                $_SESSION['login'] = true;
                 $respuesta = array(
                     'respuesta' => 'correcto',
                     'nombre' => $nombre_usuario,
@@ -68,7 +72,7 @@ if ($accion === 'login') {
         $conn->close();
     } catch (Exception $e) {
         $respuesta = array(
-            'pass' => $e->getMessage()
+            'error' => $e->getMessage()
         );
     }
     echo json_encode($respuesta);

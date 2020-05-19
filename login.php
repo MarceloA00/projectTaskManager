@@ -1,17 +1,23 @@
+<?php session_start(); ?>
 <?php include 'includes/funciones/funciones.php'; ?>
 <?php include 'includes/funciones/bd.php'; ?>
 <?php include 'includes/templates/header.php'; ?>
+<?php
+if (isset($_GET['cerrar_sesion'])) {
+    $_SESSION = array();
+}
+?>
 
 <div class="contenedor-formulario">
     <h1>UpTask</h1>
     <form id="formulario" class="caja-login" method="post">
         <div class="campo">
             <label for="usuario">Usuario: </label>
-            <input type="text" name="usuario" id="usuario" placeholder="Usuario">
+            <input type="text" name="usuario" id="usuario" placeholder="Usuario" maxlength="50">
         </div>
         <div class="campo">
             <label for="password">Password: </label>
-            <input type="password" name="password" id="password" placeholder="Password">
+            <input type="password" name="password" id="password" placeholder="Password" maxlength="60" >
         </div>
         <div class="campo enviar">
             <input type="hidden" id="tipo" value="login">
